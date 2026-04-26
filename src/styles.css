@@ -196,3 +196,67 @@ input, select {
 h3 {
   margin-bottom: 10px;
 }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+
+  /* HEADER */
+  .header {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .menu {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .user {
+    justify-self: center;
+  }
+
+  /* CONTENEDOR */
+  .container {
+    padding: 15px;
+  }
+
+  /* FORMULARIO */
+  .form-grid {
+    grid-template-columns: 1fr; /* 🔥 todo en una columna */
+  }
+
+  /* BOTÓN */
+  .btn-main {
+    justify-self: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* PEDIDOS */
+  .pedido-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .actions button {
+    flex: 1;
+  }
+
+  .delete {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* BADGES */
+  .badges {
+    flex-wrap: wrap;
+  }
+}
