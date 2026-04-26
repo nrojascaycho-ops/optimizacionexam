@@ -1,4 +1,3 @@
-/* RESET */
 body {
   margin: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
@@ -11,32 +10,19 @@ body {
   color: white;
   padding: 15px 30px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.logo {
-  display: flex;
   align-items: center;
-  gap: 10px;
 }
 
 .menu {
   display: flex;
   gap: 15px;
-  flex-wrap: wrap;
-}
-
-.menu span {
-  padding: 8px 15px;
-  border-radius: 20px;
-  cursor: pointer;
 }
 
 .active {
   background: rgba(255,255,255,0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
 }
 
 .btn-new {
@@ -45,15 +31,12 @@ body {
   border: none;
   padding: 8px 15px;
   border-radius: 20px;
-  cursor: pointer;
-  font-weight: bold;
 }
 
 /* CONTENEDOR */
 .container {
   max-width: 1000px;
   margin: 30px auto;
-  padding: 0 15px;
 }
 
 /* FORM */
@@ -61,18 +44,22 @@ body {
   background: white;
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   margin-bottom: 20px;
+}
+
+.form-inline {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-input, select {
+.form-inline input,
+.form-inline select {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ddd;
   flex: 1;
+  min-width: 120px;
 }
 
 .btn-save {
@@ -81,71 +68,28 @@ input, select {
   border: none;
   padding: 10px 20px;
   border-radius: 25px;
-  cursor: pointer;
-}
-
-/* BOTONES GENERALES */
-.btn {
-  background: #6d28d9;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 25px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background: #5b21b6;
-}
-
-.btn-circle {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-danger {
-  background: #ef4444;
-}
-
-.btn-danger:hover {
-  background: #dc2626;
 }
 
 /* LISTA */
-.title {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
 .pedido {
   background: white;
-  border-radius: 12px;
   padding: 12px;
+  border-radius: 12px;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 .left {
   display: flex;
-  gap: 15px;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .btn-ver {
-  background: #e5e7eb;
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  border: none;
 }
 
 .actions {
@@ -153,12 +97,26 @@ input, select {
   gap: 10px;
 }
 
+.edit {
+  background: #6d28d9;
+  color: white;
+  border-radius: 20px;
+  padding: 5px 12px;
+}
+
+.delete {
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
 /* ESTADOS */
 .estado {
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 12px;
-  font-weight: bold;
 }
 
 .estado.pendiente {
@@ -175,46 +133,21 @@ input, select {
   color: white;
 }
 
-/* 📱 RESPONSIVE (CELULAR) */
+/* PAGO */
+.pago {
+  background: #e0e7ff;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+/* RESPONSIVE */
 @media (max-width: 600px) {
-
-  .header {
+  .form-inline {
     flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .menu {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .form-card {
-    flex-direction: column;
-  }
-
-  .form-card input,
-  .form-card select {
-    width: 100%;
   }
 
   .pedido {
     flex-direction: column;
-    align-items: flex-start;
   }
-
-  .left {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .actions {
-    width: 100%;
-    justify-content: flex-start;
-  }
-}
-
-label {
-  font-weight: bold;
-  margin-top: 10px;
-  display: block;
 }
