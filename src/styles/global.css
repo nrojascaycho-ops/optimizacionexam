@@ -1,3 +1,4 @@
+/* BASE */
 body {
   margin: 0;
   font-family: 'Segoe UI', Arial;
@@ -46,14 +47,15 @@ body {
 /* FORM */
 .form-card {
   background: white;
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 20px;
+  padding: 22px;
+  border-radius: 16px;
+  margin-bottom: 25px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
 }
 
 .form-inline {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -65,6 +67,7 @@ body {
   flex: 1;
 }
 
+/* BOTÓN GUARDAR */
 .btn-save {
   background: #6d28d9;
   color: white;
@@ -72,55 +75,84 @@ body {
   border-radius: 25px;
   padding: 10px 20px;
   cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.btn-save:hover {
+  transform: scale(1.05);
 }
 
 /* LISTA */
 .title {
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
+/* TARJETA PEDIDO */
 .pedido {
   background: white;
-  padding: 15px;
-  border-radius: 14px;
-  margin-bottom: 12px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  margin-bottom: 18px; /* 🔥 separación entre pedidos */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  transition: 0.2s;
 }
 
+.pedido:hover {
+  transform: translateY(-2px);
+}
+
+/* IZQUIERDA */
 .left {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 18px;
 }
 
+/* BOTÓN CÍRCULO */
+.btn-ver {
+  background: #e5e7eb;
+  border: none;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+}
+
+/* INFO TEXTO */
 .info {
   display: flex;
   flex-direction: column;
+  gap: 6px;
 }
 
-/* PRODUCTO MÁS GRANDE */
+/* NOMBRE */
+.info strong {
+  font-size: 16px;
+}
+
+/* PRODUCTO */
 .producto {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
-  margin-top: 2px;
 }
 
 /* BADGES */
 .badges {
   display: flex;
-  gap: 8px;
-  margin-top: 5px;
+  gap: 10px;
+  margin-top: 6px;
 }
 
+/* ESTADOS */
 .estado {
-  padding: 4px 10px;
-  border-radius: 12px;
+  padding: 5px 12px;
+  border-radius: 14px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .estado.pendiente {
@@ -137,19 +169,21 @@ body {
   color: white;
 }
 
+/* PAGO */
 .pago {
-  background: #e0e7ff;
-  padding: 4px 10px;
-  border-radius: 12px;
+  background: #c7d2fe;
+  padding: 5px 12px;
+  border-radius: 14px;
   font-size: 12px;
 }
 
-/* BOTONES */
+/* BOTONES DERECHA */
 .actions {
   display: flex;
   gap: 10px;
 }
 
+/* EDITAR */
 .edit {
   background: #6d28d9;
   color: white;
@@ -157,28 +191,32 @@ body {
   border-radius: 20px;
   padding: 6px 14px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
+.edit:hover {
+  transform: scale(1.05);
+}
+
+/* ELIMINAR */
 .delete {
   background: #ef4444;
   color: white;
   border: none;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-.btn-ver {
-  background: #e5e7eb;
-  border: none;
-  border-radius: 50%;
-  width: 38px;
-  height: 38px;
+.delete:hover {
+  transform: scale(1.1);
 }
 
 /* RESPONSIVE */
 @media (max-width: 600px) {
+
   .form-inline {
     flex-direction: column;
   }
@@ -186,9 +224,10 @@ body {
   .pedido {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
   }
 
   .actions {
-    margin-top: 10px;
+    align-self: flex-end;
   }
 }
