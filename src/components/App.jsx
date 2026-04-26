@@ -7,7 +7,6 @@ export default function App() {
   const [pedidos, setPedidos] = useState([]);
   const [cargado, setCargado] = useState(false);
 
-  // 🔥 CARGAR DESDE localStorage
   useEffect(() => {
     const data = localStorage.getItem("pedidos");
     if (data) {
@@ -16,7 +15,6 @@ export default function App() {
     setCargado(true);
   }, []);
 
-  // 🔥 GUARDAR
   useEffect(() => {
     if (cargado) {
       localStorage.setItem("pedidos", JSON.stringify(pedidos));
@@ -39,10 +37,17 @@ export default function App() {
 
   return (
     <>
+      {/* HEADER ORIGINAL */}
       <div className="header">
         <div className="logo">
           <span>☁️</span>
-          <strong>Gestión</strong>
+          <strong>Taller-Sem4</strong>
+        </div>
+
+        <div className="menu">
+          <span className="active">Gestión de Pedidos</span>
+          <span>Clientes</span>
+          <span>Productos</span>
         </div>
 
         <button
@@ -52,19 +57,25 @@ export default function App() {
             setPedidos([]);
           }}
         >
-          Reset
+          Rojas Caycho
         </button>
       </div>
 
+      {/* CONTENIDO */}
       <div className="container">
         <PedidoForm onAdd={agregar} />
+
         <div className="title">Pedidos Recientes</div>
 
-        <PedidoList
-          pedidos={pedidos}
-          onDelete={eliminar}
-          onEdit={editar}
-        />
+        {pedidos.length === 0 ? (
+          <p>No hay pedidos aún</p>
+        ) : (
+          <PedidoList
+            pedidos={pedidos}
+            onDelete={eliminar}
+            onEdit={editar}
+          />
+        )}
       </div>
     </>
   );
