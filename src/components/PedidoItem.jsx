@@ -24,12 +24,14 @@ export default function PedidoItem({ pedido, onDelete, onEdit }) {
             <input value={producto} onChange={e => setProducto(e.target.value)} />
 
             <select value={estado} onChange={e => setEstado(e.target.value)}>
+              <option value="">Estado</option>
               <option value="pendiente">Pendiente</option>
               <option value="entregado">Entregado</option>
               <option value="cancelado">Cancelado</option>
             </select>
 
             <select value={pago} onChange={e => setPago(e.target.value)}>
+              <option value="">Pago</option>
               <option value="efectivo">Efectivo</option>
               <option value="transferencia">Transferencia</option>
               <option value="qr">QR</option>
@@ -46,21 +48,24 @@ export default function PedidoItem({ pedido, onDelete, onEdit }) {
           <div className="left">
             <button className="btn-ver">⬇</button>
 
-            <div>
+            <div className="info">
               <strong>{pedido.nombre} {pedido.apellido}</strong>
               <div>{pedido.producto}</div>
+              <div className="extra">
+                Estado: {pedido.estado || "-"} | Pago: {pedido.pago || "-"}
+              </div>
             </div>
-
-            <span className={`estado ${pedido.estado}`}>
-              {pedido.estado}
-            </span>
-
-            <span className="pago">{pedido.pago}</span>
           </div>
 
           <div className="actions">
-            <button className="edit" onClick={() => setEditando(true)}>✏</button>
-            <button className="delete" onClick={() => onDelete(pedido.id)}>🗑</button>
+            <button className="edit">✏ Editar</button>
+
+            <button
+              className="delete"
+              onClick={() => onDelete(pedido.id)}
+            >
+              🗑
+            </button>
           </div>
         </>
       )}

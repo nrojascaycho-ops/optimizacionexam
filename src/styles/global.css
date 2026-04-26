@@ -108,3 +108,14 @@ body {
     flex-direction: column;
   }
 }
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.extra {
+  font-size: 12px;
+  color: #555;
+}
