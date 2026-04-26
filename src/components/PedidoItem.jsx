@@ -2,20 +2,25 @@ import { useState } from "react";
 
 export default function PedidoItem({ pedido, onDelete, onEdit }) {
   const [editando, setEditando] = useState(false);
+
   const [nombre, setNombre] = useState(pedido.nombre);
   const [apellido, setApellido] = useState(pedido.apellido);
   const [producto, setProducto] = useState(pedido.producto);
-  const [estado, setEstado] = useState(pedido.estado);
-  const [pago, setPago] = useState(pedido.pago);
+  const [estado, setEstado] = useState(pedido.estado || "");
+  const [pago, setPago] = useState(pedido.pago || "");
 
   const guardar = () => {
+    if (!nombre || !apellido || !producto || !estado || !pago) {
+      alert("Completa todos los campos");
+      return;
+    }
+
     onEdit(pedido.id, { nombre, apellido, producto, estado, pago });
     setEditando(false);
   };
 
   return (
     <div className="pedido">
-
       {editando ? (
         <>
           <div className="left">
@@ -58,7 +63,13 @@ export default function PedidoItem({ pedido, onDelete, onEdit }) {
           </div>
 
           <div className="actions">
-            <button className="edit">✏ Editar</button>
+            {/* 🔥 AQUÍ ESTABA EL ERROR */}
+            <button
+              className="edit"
+              onClick={() => setEditando(true)}
+            >
+              ✏ Editar
+            </button>
 
             <button
               className="delete"
