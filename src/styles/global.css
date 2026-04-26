@@ -31,72 +31,93 @@ body {
   border-radius: 20px;
 }
 
+/* CONTENIDO */
 .container {
   padding: 30px;
 }
 
-/* FORM */
-.formulario {
+/* TARJETAS */
+.card {
   background: #f9fafb;
   padding: 20px;
   border-radius: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-/* 🔥 GRID EN 2 FILAS */
+/* 🔥 FORM EN 2 FILAS PERFECTO */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 }
 
+/* INPUTS */
 .form-grid input,
 .form-grid select {
-  width: 100%;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ccc;
 }
 
+/* BOTONES */
 .btn-main {
   background: #6d28d9;
   color: white;
-  border: none;
   border-radius: 20px;
-  padding: 10px;
-  cursor: pointer;
-}
-
-.delete {
-  background: #ef4444;
-  color: white;
   border: none;
-  border-radius: 20px;
   padding: 10px;
-  cursor: pointer;
-}
-
-/* LISTA */
-.pedido {
-  margin-top: 15px;
-}
-
-.pedido-simple {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
 }
 
 .edit {
   background: #6d28d9;
   color: white;
   border-radius: 20px;
-  padding: 8px 14px;
   border: none;
-  cursor: pointer;
+  padding: 8px 14px;
+}
+
+.delete {
+  background: #ef4444;
+  color: white;
+  border-radius: 20px;
+  border: none;
+  padding: 8px 14px;
+}
+
+/* FILA */
+.fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* BADGES */
+.badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.pendiente {
+  background: #facc15;
+}
+
+.entregado {
+  background: #22c55e;
+}
+
+.cancelado {
+  background: #ef4444;
+}
+
+.pago {
+  background: #c7d2fe;
+}
+
+/* ACCIONES */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

@@ -15,21 +15,16 @@ export default function App() {
   const [editandoId, setEditandoId] = useState(null);
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const guardar = () => {
     if (!form.nombre) return;
 
-    if (editandoId) {
-      setPedidos(
-        pedidos.map((p) =>
-          p.id === editandoId ? { ...form, id: editandoId } : p
-        )
-      );
+    if (editandoId !== null) {
+      setPedidos(pedidos.map(p =>
+        p.id === editandoId ? { ...form, id: editandoId } : p
+      ));
       setEditandoId(null);
     } else {
       setPedidos([...pedidos, { ...form, id: Date.now() }]);
@@ -46,12 +41,12 @@ export default function App() {
   };
 
   const eliminar = (id) => {
-    setPedidos(pedidos.filter((p) => p.id !== id));
+    setPedidos(pedidos.filter(p => p.id !== id));
   };
 
-  const editar = (pedido) => {
-    setForm(pedido);
-    setEditandoId(pedido.id);
+  const editar = (p) => {
+    setForm(p);
+    setEditandoId(p.id);
   };
 
   return (
@@ -59,19 +54,18 @@ export default function App() {
       {/* HEADER */}
       <div className="header">
         <div>☁ Sem4-Pc1</div>
-
         <div className="menu">
           <span className="active">Gestión de Pedidos</span>
           <span>Clientes</span>
           <span>Productos</span>
         </div>
-
         <div className="user">Rojas Caycho</div>
       </div>
 
       <div className="container">
+
         {/* FORMULARIO */}
-        <div className="formulario">
+        <div className="card">
           <h3>Ingrese los Datos</h3>
 
           <div className="form-grid">
@@ -94,7 +88,7 @@ export default function App() {
               <option value="qr">QR</option>
             </select>
 
-            <button className="btn-main" onClick={guardar}>
+            <button type="button" className="btn-main" onClick={guardar}>
               {editandoId ? "Actualizar" : "Guardar"}
             </button>
           </div>
@@ -103,8 +97,9 @@ export default function App() {
         {/* LISTA */}
         <h3>Pedidos Recientes</h3>
 
-        {pedidos.map((p) => (
-          <div key={p.id} className="pedido">
+        {pedidos.map(p => (
+          <div key={p.id} className="card">
+
             {editandoId === p.id ? (
               <div className="form-grid">
                 <input name="nombre" value={form.nombre} onChange={handleChange} />
@@ -124,33 +119,33 @@ export default function App() {
                   <option value="qr">QR</option>
                 </select>
 
-                <button className="btn-main" onClick={guardar}>
+                <button type="button" className="btn-main" onClick={guardar}>
                   Guardar
                 </button>
 
-                <button className="delete" onClick={() => setEditandoId(null)}>
-                  X
+                <button type="button" className="delete" onClick={() => setEditandoId(null)}>
+                  ✖
                 </button>
               </div>
             ) : (
-              <div className="pedido-simple">
+              <div className="fila">
                 <span>
-                  {p.nombre} {p.apellido} — {p.producto} (x{p.cantidad}) — {p.estado} — {p.pago}
+                  <b>{p.nombre} {p.apellido}</b> — {p.producto} (x{p.cantidad})
                 </span>
 
                 <div className="actions">
-                  <button className="edit" onClick={() => editar(p)}>
-                    Editar
-                  </button>
+                  <span className={`badge ${p.estado}`}>{p.estado}</span>
+                  <span className="badge pago">{p.pago}</span>
 
-                  <button className="delete" onClick={() => eliminar(p.id)}>
-                    X
-                  </button>
+                  <button className="edit" onClick={() => editar(p)}>Editar</button>
+                  <button className="delete" onClick={() => eliminar(p.id)}>✖</button>
                 </div>
               </div>
             )}
+
           </div>
         ))}
+
       </div>
     </>
   );
