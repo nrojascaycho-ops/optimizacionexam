@@ -1,12 +1,55 @@
-/* FORMULARIO EN 2 FILAS ORDENADAS */
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 🔥 4 columnas */
-  gap: 10px;
-  align-items: center;
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f3f4f6;
 }
 
-/* INPUTS Y SELECT */
+/* HEADER */
+.header {
+  background: linear-gradient(to right, #6d28d9, #7c3aed);
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu {
+  display: flex;
+  gap: 15px;
+}
+
+.menu .active {
+  background: rgba(255,255,255,0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.user {
+  background: white;
+  color: #6d28d9;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.container {
+  padding: 30px;
+}
+
+/* FORM */
+.formulario {
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+/* 🔥 GRID EN 2 FILAS */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
 .form-grid input,
 .form-grid select {
   width: 100%;
@@ -15,9 +58,7 @@
   border: 1px solid #ccc;
 }
 
-/* BOTÓN PRINCIPAL */
 .btn-main {
-  grid-column: span 1;
   background: #6d28d9;
   color: white;
   border: none;
@@ -26,9 +67,7 @@
   cursor: pointer;
 }
 
-/* BOTÓN CANCELAR */
 .delete {
-  grid-column: span 1;
   background: #ef4444;
   color: white;
   border: none;
@@ -37,7 +76,27 @@
   cursor: pointer;
 }
 
-/* FILA PEDIDO */
+/* LISTA */
 .pedido {
   margin-top: 15px;
+}
+
+.pedido-simple {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit {
+  background: #6d28d9;
+  color: white;
+  border-radius: 20px;
+  padding: 8px 14px;
+  border: none;
+  cursor: pointer;
 }
