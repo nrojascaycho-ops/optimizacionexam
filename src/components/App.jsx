@@ -58,7 +58,7 @@ export default function App() {
     });
   };
 
-  // 🔥 EDITAR
+  // EDITAR
   const iniciarEdicion = (p) => {
     setEditId(p.id);
     setEditData(p);
@@ -84,104 +84,117 @@ export default function App() {
   };
 
   return (
-    <div className="container">
+    <>
+      {/* HEADER */}
+      <div className="header">
+        <div>☁ Sem4-Pc1</div>
 
-      {/* FORM ARRIBA */}
-      <div className="card">
-        <h3>Ingrese los Datos</h3>
-
-        <div className="form-grid">
-          <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange}/>
-          <input name="apellido" placeholder="Apellido" value={form.apellido} onChange={handleChange}/>
-          <input name="producto" placeholder="Producto" value={form.producto} onChange={handleChange}/>
-          <input name="cantidad" type="number" placeholder="Cantidad" value={form.cantidad} onChange={handleChange}/>
-
-          <select name="estado" value={form.estado} onChange={handleChange}>
-            <option value="">Seleccione estado</option>
-            <option value="pendiente">Pendiente</option>
-            <option value="entregado">Entregado</option>
-            <option value="cancelado">Cancelado</option>
-          </select>
-
-          <select name="pago" value={form.pago} onChange={handleChange}>
-            <option value="">Seleccione pago</option>
-            <option value="efectivo">Efectivo</option>
-            <option value="transferencia">Transferencia</option>
-            <option value="qr">QR</option>
-          </select>
-
-          <button className="btn-main" onClick={guardar}>
-            Guardar
-          </button>
+        <div className="menu">
+          <span className="active">Gestión de Pedidos</span>
+          <span>Clientes</span>
+          <span>Productos</span>
         </div>
+
+        <div className="user">Rojas Caycho</div>
       </div>
 
-      <h3>Pedidos Recientes</h3>
+      <div className="container">
 
-      {pedidos.map(p => (
+        {/* FORM */}
+        <div className="card">
+          <h3>Ingrese los Datos</h3>
 
-        <div key={p.id} className="card">
+          <div className="form-grid">
+            <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange}/>
+            <input name="apellido" placeholder="Apellido" value={form.apellido} onChange={handleChange}/>
+            <input name="producto" placeholder="Producto" value={form.producto} onChange={handleChange}/>
+            <input name="cantidad" type="number" placeholder="Cantidad" value={form.cantidad} onChange={handleChange}/>
 
-          {/* 🔴 MODO EDITAR */}
-          {editId === p.id ? (
-            <div className="form-grid">
+            <select name="estado" value={form.estado} onChange={handleChange}>
+              <option value="">Seleccione estado</option>
+              <option value="pendiente">Pendiente</option>
+              <option value="entregado">Entregado</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
 
-              <input name="nombre" value={editData.nombre} onChange={handleEditChange}/>
-              <input name="apellido" value={editData.apellido} onChange={handleEditChange}/>
-              <input name="producto" value={editData.producto} onChange={handleEditChange}/>
-              <input name="cantidad" value={editData.cantidad} onChange={handleEditChange}/>
+            <select name="pago" value={form.pago} onChange={handleChange}>
+              <option value="">Seleccione pago</option>
+              <option value="efectivo">Efectivo</option>
+              <option value="transferencia">Transferencia</option>
+              <option value="qr">QR</option>
+            </select>
 
-              <select name="estado" value={editData.estado} onChange={handleEditChange}>
-                <option value="pendiente">Pendiente</option>
-                <option value="entregado">Entregado</option>
-                <option value="cancelado">Cancelado</option>
-              </select>
+            <button className="btn-main" onClick={guardar}>
+              Guardar
+            </button>
+          </div>
+        </div>
 
-              <select name="pago" value={editData.pago} onChange={handleEditChange}>
-                <option value="efectivo">Efectivo</option>
-                <option value="transferencia">Transferencia</option>
-                <option value="qr">QR</option>
-              </select>
+        <h3>Pedidos Recientes</h3>
 
-              <button className="btn-main" onClick={actualizar}>
-                Actualizar
-              </button>
+        {pedidos.map(p => (
+          <div key={p.id} className="card">
 
-              <button className="delete" onClick={() => setEditId(null)}>
-                ✖
-              </button>
+            {editId === p.id ? (
+              <div className="form-grid">
 
-            </div>
-          ) : (
+                <input name="nombre" value={editData.nombre} onChange={handleEditChange}/>
+                <input name="apellido" value={editData.apellido} onChange={handleEditChange}/>
+                <input name="producto" value={editData.producto} onChange={handleEditChange}/>
+                <input name="cantidad" value={editData.cantidad} onChange={handleEditChange}/>
 
-            /* 🟢 VISTA NORMAL */
-            <div className="pedido-item">
+                <select name="estado" value={editData.estado} onChange={handleEditChange}>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="entregado">Entregado</option>
+                  <option value="cancelado">Cancelado</option>
+                </select>
 
-              <div>
-                <strong>{p.nombre} {p.apellido}</strong>
-                <div>{p.producto} (x{p.cantidad})</div>
+                <select name="pago" value={editData.pago} onChange={handleEditChange}>
+                  <option value="efectivo">Efectivo</option>
+                  <option value="transferencia">Transferencia</option>
+                  <option value="qr">QR</option>
+                </select>
 
-                <div className="badges">
-                  <span className={`estado ${p.estado}`}>{p.estado}</span>
-                  <span className="pago">{p.pago}</span>
-                </div>
-              </div>
-
-              <div className="actions">
-                <button className="edit" onClick={() => iniciarEdicion(p)}>
-                  ✏ Editar
+                <button className="btn-main" onClick={actualizar}>
+                  Actualizar
                 </button>
-                <button className="delete" onClick={() => eliminar(p.id)}>
+
+                <button className="delete" onClick={() => setEditId(null)}>
                   ✖
                 </button>
+
+              </div>
+            ) : (
+
+              <div className="pedido-item">
+
+                <div>
+                  <strong>{p.nombre} {p.apellido}</strong>
+                  <div>{p.producto} (x{p.cantidad})</div>
+
+                  <div className="badges">
+                    <span className={`estado ${p.estado}`}>{p.estado}</span>
+                    <span className="pago">{p.pago}</span>
+                  </div>
+                </div>
+
+                <div className="actions">
+                  <button className="edit" onClick={() => iniciarEdicion(p)}>
+                    ✏ Editar
+                  </button>
+                  <button className="delete" onClick={() => eliminar(p.id)}>
+                    ✖
+                  </button>
+                </div>
+
               </div>
 
-            </div>
-          )}
+            )}
 
-        </div>
-      ))}
+          </div>
+        ))}
 
-    </div>
+      </div>
+    </>
   );
 }
