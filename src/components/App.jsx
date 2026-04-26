@@ -1,8 +1,19 @@
-import { useState } from "react";
-import "../styles.css"; // ✅ RUTA CORRECTA
+import { useEffect, useState } from "react";
+import "../styles.css";
+import { db } from "../firebase";
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  deleteDoc,
+  doc,
+  updateDoc
+} from "firebase/firestore";
 
 export default function App() {
   const [pedidos, setPedidos] = useState([]);
+  const [editId, setEditId] = useState(null);
+
   const [form, setForm] = useState({
     nombre: "",
     apellido: "",
@@ -12,22 +23,36 @@ export default function App() {
     pago: ""
   });
 
-  const [editandoId, setEditandoId] = useState(null);
+  // 🔥 LISTAR FIREBASE
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, "pedidos"), (snapshot) => {
+      setPedidos(snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })));
+    });
+    return () => unsub();
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const guardar = () => {
-    if (!form.nombre) return;
+  // 🔥 GUARDAR / ACTUALIZAR
+  const guardar = async () => {
+    if (!form.nombre || !form.producto) return;
 
-    if (editandoId !== null) {
-      setPedidos(pedidos.map(p =>
-        p.id === editandoId ? { ...form, id: editandoId } : p
-      ));
-      setEditandoId(null);
+    if (editId) {
+      await updateDoc(doc(db, "pedidos", editId), {
+        ...form,
+        cantidad: Number(form.cantidad)
+      });
+      setEditId(null);
     } else {
-      setPedidos([...pedidos, { ...form, id: Date.now() }]);
+      await addDoc(collection(db, "pedidos"), {
+        ...form,
+        cantidad: Number(form.cantidad)
+      });
     }
 
     setForm({
@@ -40,18 +65,19 @@ export default function App() {
     });
   };
 
-  const eliminar = (id) => {
-    setPedidos(pedidos.filter(p => p.id !== id));
-  };
-
+  // 🔥 EDITAR (carga al formulario)
   const editar = (p) => {
     setForm(p);
-    setEditandoId(p.id);
+    setEditId(p.id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const eliminar = async (id) => {
+    await deleteDoc(doc(db, "pedidos", id));
   };
 
   return (
     <>
-      {/* HEADER */}
       <div className="header">
         <div>☁ Sem4-Pc1</div>
         <div className="menu">
@@ -63,15 +89,16 @@ export default function App() {
       </div>
 
       <div className="container">
+
         {/* FORM */}
         <div className="card">
           <h3>Ingrese los Datos</h3>
 
           <div className="form-grid">
-            <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} />
-            <input name="apellido" placeholder="Apellido" value={form.apellido} onChange={handleChange} />
-            <input name="producto" placeholder="Producto" value={form.producto} onChange={handleChange} />
-            <input name="cantidad" type="number" placeholder="Cantidad" value={form.cantidad} onChange={handleChange} />
+            <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange}/>
+            <input name="apellido" placeholder="Apellido" value={form.apellido} onChange={handleChange}/>
+            <input name="producto" placeholder="Producto" value={form.producto} onChange={handleChange}/>
+            <input name="cantidad" type="number" placeholder="Cantidad" value={form.cantidad} onChange={handleChange}/>
 
             <select name="estado" value={form.estado} onChange={handleChange}>
               <option value="">Seleccione estado</option>
@@ -87,63 +114,35 @@ export default function App() {
               <option value="qr">QR</option>
             </select>
 
-            <button type="button" className="btn-main" onClick={guardar}>
-              {editandoId ? "Actualizar" : "Guardar"}
+            <button className="btn-main" onClick={guardar}>
+              {editId ? "Actualizar" : "Guardar"}
             </button>
           </div>
         </div>
 
-        {/* LISTA */}
+        {/* LISTA BONITA */}
         <h3>Pedidos Recientes</h3>
 
         {pedidos.map(p => (
-          <div key={p.id} className="card">
+          <div key={p.id} className="card pedido-item">
 
-            {editandoId === p.id ? (
-              <div className="form-grid">
-                <input name="nombre" value={form.nombre} onChange={handleChange} />
-                <input name="apellido" value={form.apellido} onChange={handleChange} />
-                <input name="producto" value={form.producto} onChange={handleChange} />
-                <input name="cantidad" value={form.cantidad} onChange={handleChange} />
+            <div>
+              <strong>{p.nombre} {p.apellido}</strong> — {p.producto} (x{p.cantidad})
+            </div>
 
-                <select name="estado" value={form.estado} onChange={handleChange}>
-                  <option value="pendiente">Pendiente</option>
-                  <option value="entregado">Entregado</option>
-                  <option value="cancelado">Cancelado</option>
-                </select>
+            <div className="badges">
+              <span className={`estado ${p.estado}`}>{p.estado}</span>
+              <span className="pago">{p.pago}</span>
+            </div>
 
-                <select name="pago" value={form.pago} onChange={handleChange}>
-                  <option value="efectivo">Efectivo</option>
-                  <option value="transferencia">Transferencia</option>
-                  <option value="qr">QR</option>
-                </select>
-
-                <button type="button" className="btn-main" onClick={guardar}>
-                  Guardar
-                </button>
-
-                <button type="button" className="delete" onClick={() => setEditandoId(null)}>
-                  ✖
-                </button>
-              </div>
-            ) : (
-              <div className="fila">
-                <span>
-                  <b>{p.nombre} {p.apellido}</b> — {p.producto} (x{p.cantidad})
-                </span>
-
-                <div className="actions">
-                  <span className={`badge ${p.estado}`}>{p.estado}</span>
-                  <span className="badge pago">{p.pago}</span>
-
-                  <button className="edit" onClick={() => editar(p)}>Editar</button>
-                  <button className="delete" onClick={() => eliminar(p.id)}>✖</button>
-                </div>
-              </div>
-            )}
+            <div className="actions">
+              <button className="edit" onClick={() => editar(p)}>✏ Editar</button>
+              <button className="delete" onClick={() => eliminar(p.id)}>✖</button>
+            </div>
 
           </div>
         ))}
+
       </div>
     </>
   );
