@@ -228,11 +228,13 @@ h3 {
   }
 
   /* BOTÓN */
-  .btn-main {
-    justify-self: center;
-    width: 100%;
-    text-align: center;
-  }
+.btn-main {
+  width: auto;
+  padding: 8px 16px;
+  justify-self: center;
+  font-size: 14px;
+  border-radius: 18px;
+}
 
   /* PEDIDOS */
   .pedido-item {
