@@ -12,6 +12,8 @@ import {
 
 export default function App() {
   const [pedidos, setPedidos] = useState([]);
+  const [editId, setEditId] = useState(null);
+  const [editData, setEditData] = useState({});
 
   const [form, setForm] = useState({
     nombre: "",
@@ -22,7 +24,7 @@ export default function App() {
     pago: ""
   });
 
-  // 🔥 LEER FIREBASE
+  // 🔥 FIREBASE
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "pedidos"), (snapshot) => {
       setPedidos(snapshot.docs.map(doc => ({
@@ -33,12 +35,11 @@ export default function App() {
     return () => unsub();
   }, []);
 
-  // 🔥 INPUT ARRIBA
+  // FORM ARRIBA
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // 🔥 GUARDAR NUEVO
   const guardar = async () => {
     if (!form.nombre || !form.producto) return;
 
@@ -57,11 +58,25 @@ export default function App() {
     });
   };
 
-  // 🔥 ACTUALIZAR ABAJO (EN VIVO)
-  const actualizar = async (id, campo, valor) => {
-    await updateDoc(doc(db, "pedidos", id), {
-      [campo]: campo === "cantidad" ? Number(valor) : valor
+  // 🔥 EDITAR
+  const iniciarEdicion = (p) => {
+    setEditId(p.id);
+    setEditData(p);
+  };
+
+  const handleEditChange = (e) => {
+    setEditData({
+      ...editData,
+      [e.target.name]: e.target.value
     });
+  };
+
+  const actualizar = async () => {
+    await updateDoc(doc(db, "pedidos", editId), {
+      ...editData,
+      cantidad: Number(editData.cantidad)
+    });
+    setEditId(null);
   };
 
   const eliminar = async (id) => {
@@ -69,80 +84,104 @@ export default function App() {
   };
 
   return (
-    <>
-      <div className="header">
-        <div>☁ Sem4-Pc1</div>
-        <div className="menu">
-          <span className="active">Gestión de Pedidos</span>
-          <span>Clientes</span>
-          <span>Productos</span>
+    <div className="container">
+
+      {/* FORM ARRIBA */}
+      <div className="card">
+        <h3>Ingrese los Datos</h3>
+
+        <div className="form-grid">
+          <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange}/>
+          <input name="apellido" placeholder="Apellido" value={form.apellido} onChange={handleChange}/>
+          <input name="producto" placeholder="Producto" value={form.producto} onChange={handleChange}/>
+          <input name="cantidad" type="number" placeholder="Cantidad" value={form.cantidad} onChange={handleChange}/>
+
+          <select name="estado" value={form.estado} onChange={handleChange}>
+            <option value="">Seleccione estado</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="entregado">Entregado</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+
+          <select name="pago" value={form.pago} onChange={handleChange}>
+            <option value="">Seleccione pago</option>
+            <option value="efectivo">Efectivo</option>
+            <option value="transferencia">Transferencia</option>
+            <option value="qr">QR</option>
+          </select>
+
+          <button className="btn-main" onClick={guardar}>
+            Guardar
+          </button>
         </div>
-        <div className="user">Rojas Caycho</div>
       </div>
 
-      <div className="container">
+      <h3>Pedidos Recientes</h3>
 
-        {/* FORM ARRIBA */}
-        <div className="card">
-          <h3>Ingrese los Datos</h3>
+      {pedidos.map(p => (
 
-          <div className="form-grid">
-            <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange}/>
-            <input name="apellido" placeholder="Apellido" value={form.apellido} onChange={handleChange}/>
-            <input name="producto" placeholder="Producto" value={form.producto} onChange={handleChange}/>
-            <input name="cantidad" type="number" placeholder="Cantidad" value={form.cantidad} onChange={handleChange}/>
+        <div key={p.id} className="card">
 
-            <select name="estado" value={form.estado} onChange={handleChange}>
-              <option value="">Seleccione estado</option>
-              <option value="pendiente">Pendiente</option>
-              <option value="entregado">Entregado</option>
-              <option value="cancelado">Cancelado</option>
-            </select>
-
-            <select name="pago" value={form.pago} onChange={handleChange}>
-              <option value="">Seleccione pago</option>
-              <option value="efectivo">Efectivo</option>
-              <option value="transferencia">Transferencia</option>
-              <option value="qr">QR</option>
-            </select>
-
-            <button className="btn-main" onClick={guardar}>
-              Guardar
-            </button>
-          </div>
-        </div>
-
-        {/* LISTA EDITABLE ABAJO */}
-        <h3>Pedidos Recientes</h3>
-
-        {pedidos.map(p => (
-          <div key={p.id} className="card">
+          {/* 🔴 MODO EDITAR */}
+          {editId === p.id ? (
             <div className="form-grid">
 
-              <input value={p.nombre} onChange={(e) => actualizar(p.id, "nombre", e.target.value)} />
-              <input value={p.apellido} onChange={(e) => actualizar(p.id, "apellido", e.target.value)} />
-              <input value={p.producto} onChange={(e) => actualizar(p.id, "producto", e.target.value)} />
-              <input value={p.cantidad} onChange={(e) => actualizar(p.id, "cantidad", e.target.value)} />
+              <input name="nombre" value={editData.nombre} onChange={handleEditChange}/>
+              <input name="apellido" value={editData.apellido} onChange={handleEditChange}/>
+              <input name="producto" value={editData.producto} onChange={handleEditChange}/>
+              <input name="cantidad" value={editData.cantidad} onChange={handleEditChange}/>
 
-              <select value={p.estado} onChange={(e) => actualizar(p.id, "estado", e.target.value)}>
+              <select name="estado" value={editData.estado} onChange={handleEditChange}>
                 <option value="pendiente">Pendiente</option>
                 <option value="entregado">Entregado</option>
                 <option value="cancelado">Cancelado</option>
               </select>
 
-              <select value={p.pago} onChange={(e) => actualizar(p.id, "pago", e.target.value)}>
+              <select name="pago" value={editData.pago} onChange={handleEditChange}>
                 <option value="efectivo">Efectivo</option>
                 <option value="transferencia">Transferencia</option>
                 <option value="qr">QR</option>
               </select>
 
-              <button className="delete" onClick={() => eliminar(p.id)}>✖</button>
+              <button className="btn-main" onClick={actualizar}>
+                Actualizar
+              </button>
+
+              <button className="delete" onClick={() => setEditId(null)}>
+                ✖
+              </button>
 
             </div>
-          </div>
-        ))}
+          ) : (
 
-      </div>
-    </>
+            /* 🟢 VISTA NORMAL */
+            <div className="pedido-item">
+
+              <div>
+                <strong>{p.nombre} {p.apellido}</strong>
+                <div>{p.producto} (x{p.cantidad})</div>
+
+                <div className="badges">
+                  <span className={`estado ${p.estado}`}>{p.estado}</span>
+                  <span className="pago">{p.pago}</span>
+                </div>
+              </div>
+
+              <div className="actions">
+                <button className="edit" onClick={() => iniciarEdicion(p)}>
+                  ✏ Editar
+                </button>
+                <button className="delete" onClick={() => eliminar(p.id)}>
+                  ✖
+                </button>
+              </div>
+
+            </div>
+          )}
+
+        </div>
+      ))}
+
+    </div>
   );
 }
