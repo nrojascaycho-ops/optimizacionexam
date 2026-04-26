@@ -212,3 +212,9 @@ input, select {
     justify-content: flex-start;
   }
 }
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
