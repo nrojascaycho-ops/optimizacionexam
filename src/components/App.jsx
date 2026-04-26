@@ -17,44 +17,75 @@ export default function App() {
   const [pedidos, setPedidos] = useState([]);
   const pedidosRef = collection(db, "pedidos");
 
-  // 🔥 OBTENER DATOS
-  const getPedidos = async () => {
-    const data = await getDocs(pedidosRef);
-    setPedidos(
-      data.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id
-      }))
-    );
-  };
-
+  // 🔥 OBTENER DATOS (ARREGLADO)
   useEffect(() => {
-    getPedidos();
+    const cargarPedidos = async () => {
+      try {
+        const data = await getDocs(pedidosRef);
+
+        const lista = data.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        console.log("DATOS FIREBASE:", lista);
+
+        setPedidos(lista);
+      } catch (error) {
+        console.error("ERROR AL CARGAR:", error);
+      }
+    };
+
+    cargarPedidos();
   }, []);
 
   // ➕ AGREGAR
   const agregar = async (pedido) => {
-    await addDoc(pedidosRef, pedido);
-    getPedidos();
+    try {
+      await addDoc(pedidosRef, pedido);
+
+      // 🔥 recargar lista
+      const data = await getDocs(pedidosRef);
+      setPedidos(
+        data.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+      );
+    } catch (error) {
+      console.error("ERROR AL AGREGAR:", error);
+    }
   };
 
   // ❌ ELIMINAR
   const eliminar = async (id) => {
-    const pedidoDoc = doc(db, "pedidos", id);
-    await deleteDoc(pedidoDoc);
-    getPedidos();
+    try {
+      await deleteDoc(doc(db, "pedidos", id));
+
+      setPedidos(pedidos.filter(p => p.id !== id));
+    } catch (error) {
+      console.error("ERROR AL ELIMINAR:", error);
+    }
   };
 
   // ✏ EDITAR
   const editar = async (id, datos) => {
-    const pedidoDoc = doc(db, "pedidos", id);
-    await updateDoc(pedidoDoc, datos);
-    getPedidos();
+    try {
+      await updateDoc(doc(db, "pedidos", id), datos);
+
+      setPedidos(
+        pedidos.map(p =>
+          p.id === id ? { ...p, ...datos } : p
+        )
+      );
+    } catch (error) {
+      console.error("ERROR AL EDITAR:", error);
+    }
   };
 
   return (
     <>
-      {/* 🔥 HEADER ORIGINAL */}
+      {/* HEADER ORIGINAL */}
       <div className="header">
 
         <div className="logo">
