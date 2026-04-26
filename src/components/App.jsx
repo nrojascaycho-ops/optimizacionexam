@@ -23,20 +23,27 @@ export default function App() {
     pago: ""
   });
 
-  // 🔥 LISTAR FIREBASE
-useEffect(() => {
-  const unsub = onSnapshot(collection(db, "pedidos"), (snapshot) => {
-    const data = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
+  // 🔥 LEER FIREBASE
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, "pedidos"), (snapshot) => {
+      const data = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      console.log("🔥 DATOS:", data);
+      setPedidos(data);
+    });
 
-    console.log("🔥 DATOS FIREBASE:", data); // 👈 CLAVE
-    setPedidos(data);
-  });
+    return () => unsub();
+  }, []);
 
-  return () => unsub();
-}, []);
+  // 🔥 INPUT
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
 
   // 🔥 GUARDAR / ACTUALIZAR
   const guardar = async () => {
@@ -65,13 +72,14 @@ useEffect(() => {
     });
   };
 
-  // 🔥 EDITAR (carga al formulario)
+  // 🔥 EDITAR
   const editar = (p) => {
     setForm(p);
     setEditId(p.id);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // 🔥 ELIMINAR
   const eliminar = async (id) => {
     await deleteDoc(doc(db, "pedidos", id));
   };

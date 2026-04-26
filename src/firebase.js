@@ -3,9 +3,9 @@ import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "TU_API_KEY",
-  authDomain: "TU_AUTH",
-  projectId: "TU_PROJECT_ID",
-  storageBucket: "TU_BUCKET",
+  authDomain: "pedidos-app-3e8f0.firebaseapp.com",
+  projectId: "pedidos-app-3e8f0",
+  storageBucket: "pedidos-app-3e8f0.appspot.com",
   messagingSenderId: "TU_ID",
   appId: "TU_APP_ID"
 };
