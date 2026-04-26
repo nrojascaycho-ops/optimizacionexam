@@ -1,0 +1,158 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f5f6fa;
+}
+
+.header {
+  background: #6d28d9;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  gap: 10px;
+}
+
+.menu {
+  display: flex;
+  gap: 15px;
+}
+
+.menu span {
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.active {
+  background: rgba(255,255,255,0.2);
+}
+
+.btn-new {
+  background: white;
+  color: #6d28d9;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 30px auto;
+}
+
+.form-card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+input, select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  flex: 1;
+}
+
+.btn-save {
+  background: #6d28d9;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.btn {
+  background: #6d28d9;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #5b21b6;
+}
+
+.btn-circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-danger {
+  background: #ef4444;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.pedido {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.btn-ver {
+  background: #e5e7eb;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.estado {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.estado.pendiente {
+  background: #facc15;
+}
+
+.estado.entregado {
+  background: #22c55e;
+  color: white;
+}
+
+.estado.cancelado {
+  background: #ef4444;
+  color: white;
+}
