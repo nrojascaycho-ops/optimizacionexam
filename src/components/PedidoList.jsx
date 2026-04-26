@@ -2,16 +2,15 @@ import PedidoItem from "./PedidoItem";
 
 export default function PedidoList({ pedidos, onDelete, onEdit }) {
   return (
-    <>
-      {pedidos.map((p, i) => (
+    <div>
+      {pedidos.map(p => (
         <PedidoItem
           key={p.id}
           pedido={p}
-          index={i}
           onDelete={onDelete}
           onEdit={onEdit}
         />
       ))}
-    </>
+    </div>
   );
 }

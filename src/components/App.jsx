@@ -3,18 +3,17 @@ import PedidoForm from "./PedidoForm";
 import PedidoList from "./PedidoList";
 
 export default function App() {
-
   const [pedidos, setPedidos] = useState([]);
   const [cargado, setCargado] = useState(false);
 
+  // CARGAR
   useEffect(() => {
     const data = localStorage.getItem("pedidos");
-    if (data) {
-      setPedidos(JSON.parse(data));
-    }
+    if (data) setPedidos(JSON.parse(data));
     setCargado(true);
   }, []);
 
+  // GUARDAR
   useEffect(() => {
     if (cargado) {
       localStorage.setItem("pedidos", JSON.stringify(pedidos));
@@ -30,18 +29,15 @@ export default function App() {
   };
 
   const editar = (id, datos) => {
-    setPedidos(
-      pedidos.map(p => p.id === id ? { ...p, ...datos } : p)
-    );
+    setPedidos(pedidos.map(p => p.id === id ? { ...p, ...datos } : p));
   };
 
   return (
     <>
-      {/* HEADER ORIGINAL */}
       <div className="header">
         <div className="logo">
           <span>☁️</span>
-          <strong>Taller-Sem4</strong>
+          <strong>Sem4-Pc1</strong>
         </div>
 
         <div className="menu">
@@ -61,21 +57,16 @@ export default function App() {
         </button>
       </div>
 
-      {/* CONTENIDO */}
       <div className="container">
         <PedidoForm onAdd={agregar} />
 
         <div className="title">Pedidos Recientes</div>
 
-        {pedidos.length === 0 ? (
-          <p>No hay pedidos aún</p>
-        ) : (
-          <PedidoList
-            pedidos={pedidos}
-            onDelete={eliminar}
-            onEdit={editar}
-          />
-        )}
+        <PedidoList
+          pedidos={pedidos}
+          onDelete={eliminar}
+          onEdit={editar}
+        />
       </div>
     </>
   );
