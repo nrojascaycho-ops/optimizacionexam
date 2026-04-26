@@ -1,124 +1,104 @@
 import { useState } from "react";
 
-export default function PedidoItem({ pedido, onDelete, onEdit }) {
+export default function PedidoItem({ pedido, onDelete, onUpdate }) {
+
   const [editando, setEditando] = useState(false);
 
-  const [nombre, setNombre] = useState(pedido.nombre);
-  const [apellido, setApellido] = useState(pedido.apellido);
-  const [producto, setProducto] = useState(pedido.producto);
-  const [cantidad, setCantidad] = useState(pedido.cantidad || "");
-  const [estado, setEstado] = useState(pedido.estado || "");
-  const [pago, setPago] = useState(pedido.pago || "");
+  const [form, setForm] = useState({ ...pedido });
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const guardar = () => {
-    if (!nombre || !apellido || !producto || !cantidad || !estado || !pago) {
-      alert("Completa todos los campos");
-      return;
-    }
-
-    onEdit(pedido.id, { nombre, apellido, producto, cantidad, estado, pago });
+    onUpdate(pedido.id, {
+      ...form,
+      cantidad: Number(form.cantidad) // 🔥 IMPORTANTE
+    });
     setEditando(false);
   };
 
-  return (
-    <div className="pedido">
+  if (editando) {
+    return (
+      <div className="pedido-card editando">
 
-      {editando ? (
-        <div className="form-inline" style={{ width: "100%" }}>
+        <div className="form-grid">
 
-          <input
-            placeholder="Nombre"
-            value={nombre}
-            onChange={e => setNombre(e.target.value)}
-          />
-
-          <input
-            placeholder="Apellido"
-            value={apellido}
-            onChange={e => setApellido(e.target.value)}
-          />
-
-          <input
-            placeholder="Producto"
-            value={producto}
-            onChange={e => setProducto(e.target.value)}
-          />
-
+          <input name="nombre" value={form.nombre} onChange={handleChange} />
+          <input name="apellido" value={form.apellido} onChange={handleChange} />
+          <input name="producto" value={form.producto} onChange={handleChange} />
+          
           <input
             type="number"
-            min="1"
-            placeholder="Cantidad"
-            value={cantidad}
-            onChange={e => setCantidad(e.target.value)}
+            name="cantidad"
+            value={form.cantidad}
+            onChange={handleChange}
           />
 
-          <select value={estado} onChange={e => setEstado(e.target.value)}>
-            <option value="" disabled hidden>Seleccione estado</option>
+          <select name="estado" value={form.estado} onChange={handleChange}>
             <option value="pendiente">Pendiente</option>
             <option value="entregado">Entregado</option>
             <option value="cancelado">Cancelado</option>
           </select>
 
-          <select value={pago} onChange={e => setPago(e.target.value)}>
-            <option value="" disabled hidden>Seleccione pago</option>
+          <select name="pago" value={form.pago} onChange={handleChange}>
             <option value="efectivo">Efectivo</option>
             <option value="transferencia">Transferencia</option>
             <option value="qr">QR</option>
           </select>
 
-          <button className="btn-save" onClick={guardar}>
+          <button className="btn-main" onClick={guardar}>
             Guardar
           </button>
 
-          <button
-            className="delete"
-            onClick={() => setEditando(false)}
-          >
+          <button className="delete" onClick={() => setEditando(false)}>
             ✖
           </button>
 
         </div>
-      ) : (
-        <>
-          <div className="left">
-            <button className="btn-ver">⬇</button>
 
-            <div className="info">
-              <strong>{pedido.nombre} {pedido.apellido}</strong>
+      </div>
+    );
+  }
 
-              <div className="producto">
-                {pedido.producto} (x{pedido.cantidad})
-              </div>
+  return (
+    <div className="pedido-card">
 
-              <div className="badges">
-                <span className={`estado ${pedido.estado}`}>
-                  {pedido.estado}
-                </span>
+      <div className="pedido-left">
 
-                <span className="pago">
-                  {pedido.pago}
-                </span>
-              </div>
-            </div>
+        <div className="avatar">↓</div>
+
+        <div>
+          <strong>{pedido.nombre} {pedido.apellido}</strong>
+          <div className="producto">
+            {pedido.producto} (x{pedido.cantidad})
           </div>
 
-          <div className="actions">
-            <button
-              className="edit"
-              onClick={() => setEditando(true)}
-            >
-              ✏ Editar
-            </button>
+          <div className="badges">
+            <span className={`estado ${pedido.estado}`}>
+              {pedido.estado}
+            </span>
 
-            <button
-              className="delete"
-              onClick={() => onDelete(pedido.id)}
-            >
-              🗑
-            </button>
+            <span className="pago">
+              {pedido.pago}
+            </span>
           </div>
-        </>
-      )}
+        </div>
+
+      </div>
+
+      <div className="actions">
+        <button className="edit" onClick={() => setEditando(true)}>
+          Editar
+        </button>
+
+        <button className="delete" onClick={() => onDelete(pedido.id)}>
+          🗑
+        </button>
+      </div>
 
     </div>
   );

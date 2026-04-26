@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export default function PedidoForm({ onAdd }) {
+
   const [form, setForm] = useState({
     nombre: "",
     apellido: "",
@@ -11,12 +12,19 @@ export default function PedidoForm({ onAdd }) {
   });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd(form);
+
+    onAdd({
+      ...form,
+      cantidad: Number(form.cantidad)
+    });
 
     setForm({
       nombre: "",
@@ -30,9 +38,11 @@ export default function PedidoForm({ onAdd }) {
 
   return (
     <form className="formulario" onSubmit={handleSubmit}>
+
       <h2>Ingrese los Datos</h2>
 
       <div className="form-grid">
+
         <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} />
         <input name="apellido" placeholder="Apellido" value={form.apellido} onChange={handleChange} />
         <input name="producto" placeholder="Producto" value={form.producto} onChange={handleChange} />
@@ -52,8 +62,13 @@ export default function PedidoForm({ onAdd }) {
           <option value="qr">QR</option>
         </select>
 
-        <button type="submit">Guardar</button>
+        {/* 🔥 BOTÓN COMO ACTUALIZAR */}
+        <button type="submit" className="btn-main">
+          Guardar
+        </button>
+
       </div>
+
     </form>
   );
 }

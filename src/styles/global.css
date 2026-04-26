@@ -231,3 +231,13 @@ body {
     align-self: flex-end;
   }
 }
+
+.btn-main {
+  background: #6d28d9;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
