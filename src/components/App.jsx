@@ -3,33 +3,38 @@ import PedidoForm from "./PedidoForm";
 import PedidoList from "./PedidoList";
 
 export default function App() {
-  const [pedidos, setPedidos] = useState([]);
-  const [cargado, setCargado] = useState(false);
 
-  // CARGAR
-  useEffect(() => {
+  // 🔥 CARGAR DESDE LOCALSTORAGE
+  const [pedidos, setPedidos] = useState(() => {
     const data = localStorage.getItem("pedidos");
-    if (data) setPedidos(JSON.parse(data));
-    setCargado(true);
-  }, []);
+    return data ? JSON.parse(data) : [];
+  });
 
-  // GUARDAR
+  // 🔥 GUARDAR AUTOMÁTICAMENTE
   useEffect(() => {
-    if (cargado) {
-      localStorage.setItem("pedidos", JSON.stringify(pedidos));
-    }
-  }, [pedidos, cargado]);
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+  }, [pedidos]);
 
+  // ➕ AGREGAR
   const agregar = (pedido) => {
-    setPedidos([...pedidos, { ...pedido, id: Date.now() }]);
+    setPedidos([
+      ...pedidos,
+      { id: Date.now(), ...pedido }
+    ]);
   };
 
+  // ❌ ELIMINAR
   const eliminar = (id) => {
     setPedidos(pedidos.filter(p => p.id !== id));
   };
 
+  // ✏ EDITAR
   const editar = (id, datos) => {
-    setPedidos(pedidos.map(p => p.id === id ? { ...p, ...datos } : p));
+    setPedidos(
+      pedidos.map(p =>
+        p.id === id ? { ...p, ...datos } : p
+      )
+    );
   };
 
   return (
@@ -37,24 +42,12 @@ export default function App() {
       <div className="header">
         <div className="logo">
           <span>☁️</span>
-          <strong>Sem4-Pc1</strong>
+          <strong>Gestión</strong>
         </div>
 
         <div className="menu">
-          <span className="active">Gestión de Pedidos</span>
-          <span>Clientes</span>
-          <span>Productos</span>
+          <span className="active">Pedidos</span>
         </div>
-
-        <button
-          className="btn-new"
-          onClick={() => {
-            localStorage.removeItem("pedidos");
-            setPedidos([]);
-          }}
-        >
-          Rojas Caycho
-        </button>
       </div>
 
       <div className="container">
