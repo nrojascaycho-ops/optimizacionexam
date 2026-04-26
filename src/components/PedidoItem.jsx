@@ -25,27 +25,43 @@ export default function PedidoItem({ pedido, onDelete, onEdit }) {
 
       {editando ? (
         <>
-          <div className="left">
-            <input value={nombre} onChange={e => setNombre(e.target.value)} />
-            <input value={apellido} onChange={e => setApellido(e.target.value)} />
-            <input value={producto} onChange={e => setProducto(e.target.value)} />
+          {/* 🔥 FORMULARIO ORDENADO */}
+          <div className="edit-form">
+            <input
+              placeholder="Nombre"
+              value={nombre}
+              onChange={e => setNombre(e.target.value)}
+            />
+
+            <input
+              placeholder="Apellido"
+              value={apellido}
+              onChange={e => setApellido(e.target.value)}
+            />
+
+            <input
+              placeholder="Producto"
+              value={producto}
+              onChange={e => setProducto(e.target.value)}
+            />
 
             <input
               type="number"
               min="1"
+              placeholder="Cantidad"
               value={cantidad}
               onChange={e => setCantidad(e.target.value)}
             />
 
             <select value={estado} onChange={e => setEstado(e.target.value)}>
-              <option value="" disabled hidden>Seleccione estado</option>
+              <option value="" disabled hidden>Estado</option>
               <option value="pendiente">Pendiente</option>
               <option value="entregado">Entregado</option>
               <option value="cancelado">Cancelado</option>
             </select>
 
             <select value={pago} onChange={e => setPago(e.target.value)}>
-              <option value="" disabled hidden>Seleccione pago</option>
+              <option value="" disabled hidden>Pago</option>
               <option value="efectivo">Efectivo</option>
               <option value="transferencia">Transferencia</option>
               <option value="qr">QR</option>
@@ -82,11 +98,17 @@ export default function PedidoItem({ pedido, onDelete, onEdit }) {
           </div>
 
           <div className="actions">
-            <button className="edit" onClick={() => setEditando(true)}>
+            <button
+              className="edit"
+              onClick={() => setEditando(true)}
+            >
               ✏ Editar
             </button>
 
-            <button className="delete" onClick={() => onDelete(pedido.id)}>
+            <button
+              className="delete"
+              onClick={() => onDelete(pedido.id)}
+            >
               🗑
             </button>
           </div>
