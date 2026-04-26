@@ -15,107 +15,67 @@ import {
 export default function App() {
 
   const [pedidos, setPedidos] = useState([]);
+  const [editando, setEditando] = useState(null);
+
   const pedidosRef = collection(db, "pedidos");
 
-  // 🔥 OBTENER DATOS (ARREGLADO)
+  const getPedidos = async () => {
+    const data = await getDocs(pedidosRef);
+    setPedidos(
+      data.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+    );
+  };
+
   useEffect(() => {
-    const cargarPedidos = async () => {
-      try {
-        const data = await getDocs(pedidosRef);
-
-        const lista = data.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-
-        console.log("DATOS FIREBASE:", lista);
-
-        setPedidos(lista);
-      } catch (error) {
-        console.error("ERROR AL CARGAR:", error);
-      }
-    };
-
-    cargarPedidos();
+    getPedidos();
   }, []);
 
-  // ➕ AGREGAR
   const agregar = async (pedido) => {
-    try {
-      await addDoc(pedidosRef, pedido);
-
-      // 🔥 recargar lista
-      const data = await getDocs(pedidosRef);
-      setPedidos(
-        data.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }))
-      );
-    } catch (error) {
-      console.error("ERROR AL AGREGAR:", error);
-    }
+    await addDoc(pedidosRef, pedido);
+    getPedidos();
   };
 
-  // ❌ ELIMINAR
   const eliminar = async (id) => {
-    try {
-      await deleteDoc(doc(db, "pedidos", id));
-
-      setPedidos(pedidos.filter(p => p.id !== id));
-    } catch (error) {
-      console.error("ERROR AL ELIMINAR:", error);
-    }
+    await deleteDoc(doc(db, "pedidos", id));
+    getPedidos();
   };
 
-  // ✏ EDITAR
   const editar = async (id, datos) => {
-    try {
-      await updateDoc(doc(db, "pedidos", id), datos);
-
-      setPedidos(
-        pedidos.map(p =>
-          p.id === id ? { ...p, ...datos } : p
-        )
-      );
-    } catch (error) {
-      console.error("ERROR AL EDITAR:", error);
-    }
+    await updateDoc(doc(db, "pedidos", id), datos);
+    setEditando(null);
+    getPedidos();
   };
 
   return (
     <>
-      {/* HEADER ORIGINAL */}
       <div className="header">
-
-        <div className="logo">
-          <span>☁️</span>
-          <strong>Sem4-Pc1</strong>
-        </div>
-
+        <div className="logo">☁️ <strong>Sem4-Pc1</strong></div>
         <div className="menu">
           <span className="active">Gestión de Pedidos</span>
           <span>Clientes</span>
           <span>Productos</span>
         </div>
-
-        <div className="user">
-          <span>Rojas Caycho</span>
-        </div>
-
+        <div className="user">Rojas Caycho</div>
       </div>
 
-      {/* CONTENIDO */}
       <div className="container">
 
-        <PedidoForm onAdd={agregar} />
+        <PedidoForm
+          onAdd={agregar}
+          onUpdate={editar}
+          editando={editando}
+          setEditando={setEditando}
+        />
 
         <div className="title">Pedidos Recientes</div>
 
         <PedidoList
           pedidos={pedidos}
           onDelete={eliminar}
-          onEdit={editar}
+          onEdit={setEditando}
         />
 
       </div>

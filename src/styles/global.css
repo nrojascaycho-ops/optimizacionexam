@@ -252,3 +252,16 @@ body {
   border: 1px solid #ddd;
   flex: 1;
 }
+
+.form-grid button {
+  background: #6d28d9;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.form-grid button:hover {
+  background: #5b21b6;
+}
