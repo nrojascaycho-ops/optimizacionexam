@@ -24,55 +24,60 @@ export default function PedidoItem({ pedido, onDelete, onEdit }) {
     <div className="pedido">
 
       {editando ? (
-        <>
-          {/* 🔥 FORMULARIO ORDENADO */}
-          <div className="edit-form">
-            <input
-              placeholder="Nombre"
-              value={nombre}
-              onChange={e => setNombre(e.target.value)}
-            />
+        <div className="form-inline" style={{ width: "100%" }}>
 
-            <input
-              placeholder="Apellido"
-              value={apellido}
-              onChange={e => setApellido(e.target.value)}
-            />
+          <input
+            placeholder="Nombre"
+            value={nombre}
+            onChange={e => setNombre(e.target.value)}
+          />
 
-            <input
-              placeholder="Producto"
-              value={producto}
-              onChange={e => setProducto(e.target.value)}
-            />
+          <input
+            placeholder="Apellido"
+            value={apellido}
+            onChange={e => setApellido(e.target.value)}
+          />
 
-            <input
-              type="number"
-              min="1"
-              placeholder="Cantidad"
-              value={cantidad}
-              onChange={e => setCantidad(e.target.value)}
-            />
+          <input
+            placeholder="Producto"
+            value={producto}
+            onChange={e => setProducto(e.target.value)}
+          />
 
-            <select value={estado} onChange={e => setEstado(e.target.value)}>
-              <option value="" disabled hidden>Estado</option>
-              <option value="pendiente">Pendiente</option>
-              <option value="entregado">Entregado</option>
-              <option value="cancelado">Cancelado</option>
-            </select>
+          <input
+            type="number"
+            min="1"
+            placeholder="Cantidad"
+            value={cantidad}
+            onChange={e => setCantidad(e.target.value)}
+          />
 
-            <select value={pago} onChange={e => setPago(e.target.value)}>
-              <option value="" disabled hidden>Pago</option>
-              <option value="efectivo">Efectivo</option>
-              <option value="transferencia">Transferencia</option>
-              <option value="qr">QR</option>
-            </select>
-          </div>
+          <select value={estado} onChange={e => setEstado(e.target.value)}>
+            <option value="" disabled hidden>Seleccione estado</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="entregado">Entregado</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
 
-          <div className="actions">
-            <button className="edit" onClick={guardar}>✔</button>
-            <button className="delete" onClick={() => setEditando(false)}>✖</button>
-          </div>
-        </>
+          <select value={pago} onChange={e => setPago(e.target.value)}>
+            <option value="" disabled hidden>Seleccione pago</option>
+            <option value="efectivo">Efectivo</option>
+            <option value="transferencia">Transferencia</option>
+            <option value="qr">QR</option>
+          </select>
+
+          <button className="btn-save" onClick={guardar}>
+            Guardar
+          </button>
+
+          <button
+            className="delete"
+            onClick={() => setEditando(false)}
+          >
+            ✖
+          </button>
+
+        </div>
       ) : (
         <>
           <div className="left">

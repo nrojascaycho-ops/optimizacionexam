@@ -28,7 +28,7 @@ export default function PedidoForm({ onAdd }) {
 
   return (
     <div className="form-card">
-      <h3>Rellene el formulario</h3>
+      <h3>Ingrese los Datos</h3>
 
       <form onSubmit={handleSubmit} className="form-inline">
         <input placeholder="Nombre" value={nombre} onChange={e => setNombre(e.target.value)} />
