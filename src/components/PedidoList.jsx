@@ -1,6 +1,10 @@
 import PedidoItem from "./PedidoItem";
 
 export default function PedidoList({ pedidos, onDelete, onEdit }) {
+  if (!pedidos.length) {
+    return <p>No hay pedidos aún</p>;
+  }
+
   return (
     <div>
       {pedidos.map(p => (

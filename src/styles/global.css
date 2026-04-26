@@ -1,4 +1,3 @@
-/* RESET */
 body {
   margin: 0;
   font-family: 'Segoe UI', Arial;
@@ -92,7 +91,6 @@ body {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-/* INFO */
 .left {
   display: flex;
   align-items: center;
@@ -104,18 +102,46 @@ body {
   flex-direction: column;
 }
 
-.info strong {
-  font-size: 16px;
+/* PRODUCTO MÁS GRANDE */
+.producto {
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 2px;
 }
 
-.info div {
-  font-size: 14px;
-  color: #555;
+/* BADGES */
+.badges {
+  display: flex;
+  gap: 8px;
+  margin-top: 5px;
 }
 
-.extra {
-  font-size: 13px;
-  color: #777;
+.estado {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.estado.pendiente {
+  background: #facc15;
+}
+
+.estado.entregado {
+  background: #22c55e;
+  color: white;
+}
+
+.estado.cancelado {
+  background: #ef4444;
+  color: white;
+}
+
+.pago {
+  background: #e0e7ff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
 }
 
 /* BOTONES */
@@ -143,7 +169,6 @@ body {
   cursor: pointer;
 }
 
-/* BOTÓN VER */
 .btn-ver {
   background: #e5e7eb;
   border: none;
