@@ -1,18 +1,16 @@
-/* BASE */
 body {
   margin: 0;
-  font-family: 'Segoe UI', Arial;
-  background: #f5f6fa;
+  font-family: Arial;
+  background: #f3f4f6;
 }
 
 /* HEADER */
 .header {
-  background: #6d28d9;
+  background: linear-gradient(to right, #6d28d9, #7c3aed);
   color: white;
   padding: 15px 30px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .menu {
@@ -20,216 +18,43 @@ body {
   gap: 15px;
 }
 
-.menu span {
+.menu .active {
+  background: rgba(255,255,255,0.2);
   padding: 6px 12px;
   border-radius: 20px;
 }
 
-.active {
-  background: rgba(255,255,255,0.2);
-}
-
-.btn-new {
+.user {
   background: white;
   color: #6d28d9;
-  border: none;
+  padding: 6px 12px;
   border-radius: 20px;
-  padding: 8px 15px;
-  cursor: pointer;
 }
 
-/* CONTENEDOR */
 .container {
-  max-width: 1000px;
-  margin: 30px auto;
+  padding: 30px;
 }
 
 /* FORM */
-.form-card {
-  background: white;
-  padding: 22px;
-  border-radius: 16px;
-  margin-bottom: 25px;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+.formulario {
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
 }
 
-.form-inline {
+.form-grid {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
-.form-inline input,
-.form-inline select {
+.form-grid input,
+.form-grid select {
+  width: 140px;
   padding: 10px;
   border-radius: 10px;
-  border: 1px solid #ddd;
-  flex: 1;
-}
-
-/* BOTÓN GUARDAR */
-.btn-save {
-  background: #6d28d9;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: 0.2s;
-}
-
-.btn-save:hover {
-  transform: scale(1.05);
-}
-
-/* LISTA */
-.title {
-  font-weight: bold;
-  margin-bottom: 12px;
-}
-
-/* TARJETA PEDIDO */
-.pedido {
-  background: white;
-  padding: 18px 20px;
-  border-radius: 16px;
-  margin-bottom: 18px; /* 🔥 separación entre pedidos */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
-  transition: 0.2s;
-}
-
-.pedido:hover {
-  transform: translateY(-2px);
-}
-
-/* IZQUIERDA */
-.left {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-/* BOTÓN CÍRCULO */
-.btn-ver {
-  background: #e5e7eb;
-  border: none;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-}
-
-/* INFO TEXTO */
-.info {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-/* NOMBRE */
-.info strong {
-  font-size: 16px;
-}
-
-/* PRODUCTO */
-.producto {
-  font-size: 16px;
-  font-weight: 500;
-}
-
-/* BADGES */
-.badges {
-  display: flex;
-  gap: 10px;
-  margin-top: 6px;
-}
-
-/* ESTADOS */
-.estado {
-  padding: 5px 12px;
-  border-radius: 14px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.estado.pendiente {
-  background: #facc15;
-}
-
-.estado.entregado {
-  background: #22c55e;
-  color: white;
-}
-
-.estado.cancelado {
-  background: #ef4444;
-  color: white;
-}
-
-/* PAGO */
-.pago {
-  background: #c7d2fe;
-  padding: 5px 12px;
-  border-radius: 14px;
-  font-size: 12px;
-}
-
-/* BOTONES DERECHA */
-.actions {
-  display: flex;
-  gap: 10px;
-}
-
-/* EDITAR */
-.edit {
-  background: #6d28d9;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 6px 14px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.edit:hover {
-  transform: scale(1.05);
-}
-
-/* ELIMINAR */
-.delete {
-  background: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.delete:hover {
-  transform: scale(1.1);
-}
-
-/* RESPONSIVE */
-@media (max-width: 600px) {
-
-  .form-inline {
-    flex-direction: column;
-  }
-
-  .pedido {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .actions {
-    align-self: flex-end;
-  }
+  border: 1px solid #ccc;
 }
 
 .btn-main {
@@ -238,6 +63,90 @@ body {
   border: none;
   border-radius: 20px;
   padding: 10px 18px;
-  font-weight: bold;
   cursor: pointer;
+}
+
+/* TARJETAS */
+.pedido-card {
+  background: #f9fafb;
+  padding: 18px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pedido-left {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  background: #e5e7eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.producto {
+  color: #555;
+}
+
+.badges {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+}
+
+.estado {
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+.estado.pendiente {
+  background: #facc15;
+}
+
+.estado.cancelado {
+  background: #ef4444;
+  color: white;
+}
+
+.estado.entregado {
+  background: #22c55e;
+  color: white;
+}
+
+.pago {
+  background: #c7d2fe;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit {
+  background: #6d28d9;
+  color: white;
+  border-radius: 20px;
+  padding: 8px 14px;
+  border: none;
+}
+
+.delete {
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  padding: 10px;
+  border: none;
 }
