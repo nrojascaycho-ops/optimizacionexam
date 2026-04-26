@@ -53,11 +53,13 @@ export default function App() {
     <>
       <div className="header">
         <div className="logo">☁️ <strong>Sem4-Pc1</strong></div>
+
         <div className="menu">
           <span className="active">Gestión de Pedidos</span>
           <span>Clientes</span>
           <span>Productos</span>
         </div>
+
         <div className="user">Rojas Caycho</div>
       </div>
 

@@ -1,8 +1,6 @@
-
-/* RESET */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background: #f3f4f6;
 }
 
@@ -13,13 +11,6 @@ body {
   padding: 15px 30px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  display: flex;
-  gap: 5px;
-  align-items: center;
 }
 
 .menu {
@@ -30,7 +21,6 @@ body {
 .menu span {
   padding: 8px 15px;
   border-radius: 20px;
-  cursor: pointer;
 }
 
 .menu .active {
@@ -42,7 +32,6 @@ body {
   color: #6d28d9;
   padding: 6px 12px;
   border-radius: 20px;
-  font-size: 13px;
 }
 
 /* CONTENEDOR */
@@ -50,63 +39,37 @@ body {
   padding: 30px;
 }
 
-/* FORMULARIO */
+/* FORM */
 .formulario {
   background: white;
   padding: 20px;
   border-radius: 15px;
+  max-width: 1000px;
+  margin: 0 auto 25px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  margin-bottom: 25px;
 }
 
-.formulario h2 {
-  margin-bottom: 15px;
-}
-
-/* 🔥 FORM HORIZONTAL */
 .form-grid {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
-/* INPUTS */
-.form-grid input {
-  width: 140px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-/* SELECT */
+.form-grid input,
 .form-grid select {
-  width: 160px;
+  flex: 1;
+  min-width: 140px;
   padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  border-radius: 10px;
+  border: 1px solid #ddd;
 }
 
-/* BOTÓN */
 .form-grid button {
-  width: 110px;
-  padding: 10px;
+  min-width: 120px;
   background: #6d28d9;
   color: white;
   border: none;
   border-radius: 20px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.form-grid button:hover {
-  background: #5b21b6;
-}
-
-/* TÍTULO */
-.title {
-  font-weight: bold;
-  margin-bottom: 10px;
 }
 
 /* LISTA */
@@ -117,97 +80,47 @@ body {
   margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
-/* INFO */
 .info-row {
   display: flex;
   gap: 15px;
   align-items: center;
-  flex-wrap: wrap;
-}
-
-.producto {
-  font-size: 15px;
-  color: #444;
 }
 
 /* ESTADOS */
 .estado {
-  padding: 5px 12px;
+  padding: 5px 10px;
   border-radius: 15px;
   font-size: 12px;
-  font-weight: bold;
-  color: white;
 }
 
-.estado.pendiente {
-  background: #facc15;
-  color: black;
-}
+.estado.pendiente { background: #facc15; }
+.estado.entregado { background: #22c55e; color:white;}
+.estado.cancelado { background: #ef4444; color:white;}
 
-.estado.entregado {
-  background: #22c55e;
-}
-
-.estado.cancelado {
-  background: #ef4444;
-}
-
-/* PAGO */
 .pago {
   background: #e0e7ff;
-  padding: 5px 12px;
+  padding: 5px 10px;
   border-radius: 15px;
-  font-size: 12px;
 }
 
 /* BOTONES */
 .actions {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .edit {
   background: #6d28d9;
   color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 12px;
-  cursor: pointer;
+  border-radius: 10px;
+  padding: 8px 12px;
 }
 
 .delete {
   background: #ef4444;
   color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .form-grid {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .form-grid input,
-  .form-grid select,
-  .form-grid button {
-    width: 100%;
-  }
-
-  .pedido {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
+  border-radius: 10px;
+  padding: 8px 12px;
 }

@@ -4,7 +4,6 @@ export default function PedidoItem({ pedido, onDelete, onEdit }) {
     <div className="pedido">
 
       <div className="info-row">
-
         <strong>{pedido.nombre} {pedido.apellido}</strong>
 
         <span className="producto">
@@ -18,7 +17,6 @@ export default function PedidoItem({ pedido, onDelete, onEdit }) {
         <span className="pago">
           {pedido.pago}
         </span>
-
       </div>
 
       <div className="actions">

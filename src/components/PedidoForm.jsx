@@ -2,50 +2,47 @@ import { useState, useEffect } from "react";
 
 export default function PedidoForm({ onAdd, onUpdate, editando, setEditando }) {
 
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [producto, setProducto] = useState("");
-  const [cantidad, setCantidad] = useState("");
-  const [estado, setEstado] = useState("");
-  const [pago, setPago] = useState("");
+  const [form, setForm] = useState({
+    nombre: "",
+    apellido: "",
+    producto: "",
+    cantidad: "",
+    estado: "",
+    pago: ""
+  });
 
   useEffect(() => {
     if (editando) {
-      setNombre(editando.nombre);
-      setApellido(editando.apellido);
-      setProducto(editando.producto);
-      setCantidad(editando.cantidad);
-      setEstado(editando.estado);
-      setPago(editando.pago);
+      setForm(editando);
     }
   }, [editando]);
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const pedido = {
-      nombre,
-      apellido,
-      producto,
-      cantidad,
-      estado,
-      pago
-    };
-
     if (editando) {
-      onUpdate(editando.id, pedido);
+      onUpdate(editando.id, form);
     } else {
-      onAdd(pedido);
+      onAdd(form);
     }
 
     setEditando(null);
 
-    setNombre("");
-    setApellido("");
-    setProducto("");
-    setCantidad("");
-    setEstado("");
-    setPago("");
+    setForm({
+      nombre: "",
+      apellido: "",
+      producto: "",
+      cantidad: "",
+      estado: "",
+      pago: ""
+    });
   };
 
   return (
@@ -55,25 +52,19 @@ export default function PedidoForm({ onAdd, onUpdate, editando, setEditando }) {
 
       <div className="form-grid">
 
-        <input placeholder="Nombre" value={nombre} onChange={e => setNombre(e.target.value)} />
-        <input placeholder="Apellido" value={apellido} onChange={e => setApellido(e.target.value)} />
-        <input placeholder="Producto" value={producto} onChange={e => setProducto(e.target.value)} />
+        <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} />
+        <input name="apellido" placeholder="Apellido" value={form.apellido} onChange={handleChange} />
+        <input name="producto" placeholder="Producto" value={form.producto} onChange={handleChange} />
+        <input type="number" name="cantidad" placeholder="Cantidad" value={form.cantidad} onChange={handleChange} />
 
-        <input
-          type="number"
-          placeholder="Cantidad"
-          value={cantidad}
-          onChange={e => setCantidad(e.target.value)}
-        />
-
-        <select value={estado} onChange={e => setEstado(e.target.value)}>
+        <select name="estado" value={form.estado} onChange={handleChange}>
           <option value="">Seleccione estado</option>
           <option value="pendiente">Pendiente</option>
           <option value="entregado">Entregado</option>
           <option value="cancelado">Cancelado</option>
         </select>
 
-        <select value={pago} onChange={e => setPago(e.target.value)}>
+        <select name="pago" value={form.pago} onChange={handleChange}>
           <option value="">Seleccione pago</option>
           <option value="efectivo">Efectivo</option>
           <option value="transferencia">Transferencia</option>
@@ -85,6 +76,7 @@ export default function PedidoForm({ onAdd, onUpdate, editando, setEditando }) {
         </button>
 
       </div>
+
     </form>
   );
 }
