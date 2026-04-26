@@ -12,7 +12,6 @@ import {
 
 export default function App() {
   const [pedidos, setPedidos] = useState([]);
-  const [editId, setEditId] = useState(null);
 
   const [form, setForm] = useState({
     nombre: "",
@@ -26,41 +25,27 @@ export default function App() {
   // 🔥 LEER FIREBASE
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "pedidos"), (snapshot) => {
-      const data = snapshot.docs.map(doc => ({
+      setPedidos(snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
-      }));
-      console.log("🔥 DATOS:", data);
-      setPedidos(data);
+      })));
     });
-
     return () => unsub();
   }, []);
 
-  // 🔥 INPUT
+  // 🔥 INPUT ARRIBA
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // 🔥 GUARDAR / ACTUALIZAR
+  // 🔥 GUARDAR NUEVO
   const guardar = async () => {
     if (!form.nombre || !form.producto) return;
 
-    if (editId) {
-      await updateDoc(doc(db, "pedidos", editId), {
-        ...form,
-        cantidad: Number(form.cantidad)
-      });
-      setEditId(null);
-    } else {
-      await addDoc(collection(db, "pedidos"), {
-        ...form,
-        cantidad: Number(form.cantidad)
-      });
-    }
+    await addDoc(collection(db, "pedidos"), {
+      ...form,
+      cantidad: Number(form.cantidad)
+    });
 
     setForm({
       nombre: "",
@@ -72,14 +57,13 @@ export default function App() {
     });
   };
 
-  // 🔥 EDITAR
-  const editar = (p) => {
-    setForm(p);
-    setEditId(p.id);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  // 🔥 ACTUALIZAR ABAJO (EN VIVO)
+  const actualizar = async (id, campo, valor) => {
+    await updateDoc(doc(db, "pedidos", id), {
+      [campo]: campo === "cantidad" ? Number(valor) : valor
+    });
   };
 
-  // 🔥 ELIMINAR
   const eliminar = async (id) => {
     await deleteDoc(doc(db, "pedidos", id));
   };
@@ -98,7 +82,7 @@ export default function App() {
 
       <div className="container">
 
-        {/* FORM */}
+        {/* FORM ARRIBA */}
         <div className="card">
           <h3>Ingrese los Datos</h3>
 
@@ -123,31 +107,38 @@ export default function App() {
             </select>
 
             <button className="btn-main" onClick={guardar}>
-              {editId ? "Actualizar" : "Guardar"}
+              Guardar
             </button>
           </div>
         </div>
 
-        {/* LISTA BONITA */}
+        {/* LISTA EDITABLE ABAJO */}
         <h3>Pedidos Recientes</h3>
 
         {pedidos.map(p => (
-          <div key={p.id} className="card pedido-item">
+          <div key={p.id} className="card">
+            <div className="form-grid">
 
-            <div>
-              <strong>{p.nombre} {p.apellido}</strong> — {p.producto} (x{p.cantidad})
-            </div>
+              <input value={p.nombre} onChange={(e) => actualizar(p.id, "nombre", e.target.value)} />
+              <input value={p.apellido} onChange={(e) => actualizar(p.id, "apellido", e.target.value)} />
+              <input value={p.producto} onChange={(e) => actualizar(p.id, "producto", e.target.value)} />
+              <input value={p.cantidad} onChange={(e) => actualizar(p.id, "cantidad", e.target.value)} />
 
-            <div className="badges">
-              <span className={`estado ${p.estado}`}>{p.estado}</span>
-              <span className="pago">{p.pago}</span>
-            </div>
+              <select value={p.estado} onChange={(e) => actualizar(p.id, "estado", e.target.value)}>
+                <option value="pendiente">Pendiente</option>
+                <option value="entregado">Entregado</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
 
-            <div className="actions">
-              <button className="edit" onClick={() => editar(p)}>✏ Editar</button>
+              <select value={p.pago} onChange={(e) => actualizar(p.id, "pago", e.target.value)}>
+                <option value="efectivo">Efectivo</option>
+                <option value="transferencia">Transferencia</option>
+                <option value="qr">QR</option>
+              </select>
+
               <button className="delete" onClick={() => eliminar(p.id)}>✖</button>
-            </div>
 
+            </div>
           </div>
         ))}
 
