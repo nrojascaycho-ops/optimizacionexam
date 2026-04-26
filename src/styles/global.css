@@ -11,8 +11,14 @@ body {
   color: white;
   padding: 15px 30px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .menu {
@@ -21,21 +27,21 @@ body {
 }
 
 .menu span {
-  padding: 6px 12px;
+  padding: 8px 15px;
   border-radius: 20px;
+  cursor: pointer;
 }
 
 .active {
   background: rgba(255,255,255,0.2);
 }
 
-.btn-new {
+.user {
   background: white;
   color: #6d28d9;
-  border: none;
+  padding: 6px 12px;
   border-radius: 20px;
-  padding: 8px 15px;
-  cursor: pointer;
+  font-size: 13px;
 }
 
 /* CONTENEDOR */
@@ -230,4 +236,19 @@ body {
   .actions {
     align-self: flex-end;
   }
+}
+
+/* EDICIÓN COMPACTA */
+.edit-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.edit-row input,
+.edit-row select {
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  flex: 1;
 }
