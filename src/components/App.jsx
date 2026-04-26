@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PedidoForm from "./PedidoForm";
 import PedidoList from "./PedidoList";
 
 export default function App() {
-  const [pedidos, setPedidos] = useState([
-    { id: 1, nombre: "Juan Pérez", producto: "Laptop Pro", estado: "pendiente" },
-    { id: 2, nombre: "María García", producto: "Monitor 4K", estado: "entregado" }
-  ]);
+
+  const [pedidos, setPedidos] = useState([]);
+  const [cargado, setCargado] = useState(false);
+
+  // 🔥 CARGAR DESDE localStorage
+  useEffect(() => {
+    const data = localStorage.getItem("pedidos");
+    if (data) {
+      setPedidos(JSON.parse(data));
+    }
+    setCargado(true);
+  }, []);
+
+  // 🔥 GUARDAR
+  useEffect(() => {
+    if (cargado) {
+      localStorage.setItem("pedidos", JSON.stringify(pedidos));
+    }
+  }, [pedidos, cargado]);
 
   const agregar = (pedido) => {
     setPedidos([...pedidos, { ...pedido, id: Date.now() }]);
@@ -27,16 +42,18 @@ export default function App() {
       <div className="header">
         <div className="logo">
           <span>☁️</span>
-          <strong>Taller-Sem4</strong>
+          <strong>Gestión</strong>
         </div>
 
-        <div className="menu">
-          <span className="active">Gestión de Pedidos</span>
-          <span>Clientes</span>
-          <span>Productos</span>
-        </div>
-
-        <button className="btn-new">Pedidos</button>
+        <button
+          className="btn-new"
+          onClick={() => {
+            localStorage.removeItem("pedidos");
+            setPedidos([]);
+          }}
+        >
+          Reset
+        </button>
       </div>
 
       <div className="container">
