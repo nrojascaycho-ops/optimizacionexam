@@ -1,3 +1,4 @@
+
 /* RESET */
 body {
   margin: 0;
@@ -7,11 +8,17 @@ body {
 
 /* HEADER */
 .header {
-  background: #6d28d9;
+  background: linear-gradient(to right, #6d28d9, #7c3aed);
   color: white;
   padding: 15px 30px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  gap: 5px;
   align-items: center;
 }
 
@@ -49,24 +56,32 @@ body {
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .formulario h2 {
   margin-bottom: 15px;
 }
 
-/* GRID FORM */
+/* 🔥 FORM HORIZONTAL */
 .form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 /* INPUTS */
-.form-grid input,
+.form-grid input {
+  width: 140px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* SELECT */
 .form-grid select {
+  width: 160px;
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -74,11 +89,12 @@ body {
 
 /* BOTÓN */
 .form-grid button {
+  width: 110px;
+  padding: 10px;
   background: #6d28d9;
   color: white;
   border: none;
   border-radius: 20px;
-  padding: 10px;
   cursor: pointer;
   transition: 0.2s;
 }
@@ -87,17 +103,18 @@ body {
   background: #5b21b6;
 }
 
-/* LISTA */
+/* TÍTULO */
 .title {
   font-weight: bold;
   margin-bottom: 10px;
 }
 
+/* LISTA */
 .pedido {
   background: white;
   padding: 15px;
   border-radius: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -112,15 +129,16 @@ body {
 }
 
 .producto {
-  font-size: 14px;
-  color: #555;
+  font-size: 15px;
+  color: #444;
 }
 
 /* ESTADOS */
 .estado {
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 15px;
   font-size: 12px;
+  font-weight: bold;
   color: white;
 }
 
@@ -140,7 +158,7 @@ body {
 /* PAGO */
 .pago {
   background: #e0e7ff;
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 15px;
   font-size: 12px;
 }
@@ -155,8 +173,8 @@ body {
   background: #6d28d9;
   color: white;
   border: none;
-  padding: 8px 12px;
-  border-radius: 10px;
+  padding: 8px 14px;
+  border-radius: 12px;
   cursor: pointer;
 }
 
@@ -164,7 +182,32 @@ body {
   background: #ef4444;
   color: white;
   border: none;
-  padding: 8px 12px;
-  border-radius: 10px;
+  padding: 8px 14px;
+  border-radius: 12px;
   cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .form-grid {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-grid input,
+  .form-grid select,
+  .form-grid button {
+    width: 100%;
+  }
+
+  .pedido {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
