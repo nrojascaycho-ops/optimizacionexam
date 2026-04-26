@@ -16,27 +16,21 @@ export default function PedidoItem({ pedido, onDelete, onUpdate }) {
   const guardar = () => {
     onUpdate(pedido.id, {
       ...form,
-      cantidad: Number(form.cantidad) // 🔥 IMPORTANTE
+      cantidad: Number(form.cantidad)
     });
     setEditando(false);
   };
 
+  // 🔥 MODO EDITAR (MISMO FORMULARIO)
   if (editando) {
     return (
-      <div className="pedido-card editando">
+      <div className="pedido">
 
         <div className="form-grid">
-
           <input name="nombre" value={form.nombre} onChange={handleChange} />
           <input name="apellido" value={form.apellido} onChange={handleChange} />
           <input name="producto" value={form.producto} onChange={handleChange} />
-          
-          <input
-            type="number"
-            name="cantidad"
-            value={form.cantidad}
-            onChange={handleChange}
-          />
+          <input type="number" name="cantidad" value={form.cantidad} onChange={handleChange} />
 
           <select name="estado" value={form.estado} onChange={handleChange}>
             <option value="pendiente">Pendiente</option>
@@ -57,37 +51,18 @@ export default function PedidoItem({ pedido, onDelete, onUpdate }) {
           <button className="delete" onClick={() => setEditando(false)}>
             ✖
           </button>
-
         </div>
 
       </div>
     );
   }
 
+  // 🔥 MODO NORMAL (MISMO ESTILO PERO SOLO TEXTO)
   return (
-    <div className="pedido-card">
+    <div className="pedido simple">
 
-      <div className="pedido-left">
-
-        <div className="avatar">↓</div>
-
-        <div>
-          <strong>{pedido.nombre} {pedido.apellido}</strong>
-          <div className="producto">
-            {pedido.producto} (x{pedido.cantidad})
-          </div>
-
-          <div className="badges">
-            <span className={`estado ${pedido.estado}`}>
-              {pedido.estado}
-            </span>
-
-            <span className="pago">
-              {pedido.pago}
-            </span>
-          </div>
-        </div>
-
+      <div className="texto">
+        {pedido.nombre} {pedido.apellido} — {pedido.producto} (x{pedido.cantidad}) — {pedido.estado} — {pedido.pago}
       </div>
 
       <div className="actions">
@@ -96,7 +71,7 @@ export default function PedidoItem({ pedido, onDelete, onUpdate }) {
         </button>
 
         <button className="delete" onClick={() => onDelete(pedido.id)}>
-          🗑
+          X
         </button>
       </div>
 

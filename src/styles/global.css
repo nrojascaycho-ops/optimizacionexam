@@ -1,152 +1,43 @@
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #f3f4f6;
-}
-
-/* HEADER */
-.header {
-  background: linear-gradient(to right, #6d28d9, #7c3aed);
-  color: white;
-  padding: 15px 30px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.menu {
-  display: flex;
-  gap: 15px;
-}
-
-.menu .active {
-  background: rgba(255,255,255,0.2);
-  padding: 6px 12px;
-  border-radius: 20px;
-}
-
-.user {
-  background: white;
-  color: #6d28d9;
-  padding: 6px 12px;
-  border-radius: 20px;
-}
-
-.container {
-  padding: 30px;
-}
-
-/* FORM */
-.formulario {
-  background: #f9fafb;
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 20px;
-}
-
+/* FORMULARIO EN 2 FILAS ORDENADAS */
 .form-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 🔥 4 columnas */
   gap: 10px;
-  flex-wrap: nowrap;
+  align-items: center;
 }
 
+/* INPUTS Y SELECT */
 .form-grid input,
 .form-grid select {
-  width: 140px;
+  width: 100%;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ccc;
 }
 
+/* BOTÓN PRINCIPAL */
 .btn-main {
+  grid-column: span 1;
   background: #6d28d9;
   color: white;
   border: none;
   border-radius: 20px;
-  padding: 10px 18px;
+  padding: 10px;
   cursor: pointer;
 }
 
-/* TARJETAS */
-.pedido-card {
-  background: #f9fafb;
-  padding: 18px;
-  border-radius: 15px;
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.pedido-left {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
-
-.avatar {
-  width: 45px;
-  height: 45px;
-  background: #e5e7eb;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.producto {
-  color: #555;
-}
-
-.badges {
-  margin-top: 8px;
-  display: flex;
-  gap: 10px;
-}
-
-.estado {
-  padding: 5px 12px;
-  border-radius: 15px;
-  font-size: 12px;
-}
-
-.estado.pendiente {
-  background: #facc15;
-}
-
-.estado.cancelado {
-  background: #ef4444;
-  color: white;
-}
-
-.estado.entregado {
-  background: #22c55e;
-  color: white;
-}
-
-.pago {
-  background: #c7d2fe;
-  padding: 5px 12px;
-  border-radius: 15px;
-  font-size: 12px;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-}
-
-.edit {
-  background: #6d28d9;
-  color: white;
-  border-radius: 20px;
-  padding: 8px 14px;
-  border: none;
-}
-
+/* BOTÓN CANCELAR */
 .delete {
+  grid-column: span 1;
   background: #ef4444;
   color: white;
-  border-radius: 50%;
-  padding: 10px;
   border: none;
+  border-radius: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* FILA PEDIDO */
+.pedido {
+  margin-top: 15px;
 }
