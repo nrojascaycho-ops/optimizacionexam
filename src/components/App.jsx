@@ -1,52 +1,41 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PedidoForm from "./PedidoForm";
 import PedidoList from "./PedidoList";
 
-import { db } from "../firebase";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-  updateDoc
-} from "firebase/firestore";
-
 export default function App() {
+  const [pedidos, setPedidos] = useState([
+    {
+      id: 1,
+      nombre: "María",
+      apellido: "Gonzales",
+      producto: "Televisor",
+      cantidad: 2,
+      estado: "pendiente",
+      pago: "efectivo",
+    },
+    {
+      id: 2,
+      nombre: "Nikoll",
+      apellido: "Rojas",
+      producto: "Celular",
+      cantidad: 5,
+      estado: "cancelado",
+      pago: "qr",
+    },
+  ]);
 
-  const [pedidos, setPedidos] = useState([]);
-  const [editando, setEditando] = useState(null);
+  const agregar = (nuevo) => {
+    setPedidos([...pedidos, { ...nuevo, id: Date.now() }]);
+  };
 
-  const pedidosRef = collection(db, "pedidos");
+  const eliminar = (id) => {
+    setPedidos(pedidos.filter((p) => p.id !== id));
+  };
 
-  const getPedidos = async () => {
-    const data = await getDocs(pedidosRef);
+  const editar = (id, datos) => {
     setPedidos(
-      data.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }))
+      pedidos.map((p) => (p.id === id ? { ...p, ...datos } : p))
     );
-  };
-
-  useEffect(() => {
-    getPedidos();
-  }, []);
-
-  const agregar = async (pedido) => {
-    await addDoc(pedidosRef, pedido);
-    getPedidos();
-  };
-
-  const eliminar = async (id) => {
-    await deleteDoc(doc(db, "pedidos", id));
-    getPedidos();
-  };
-
-  const editar = async (id, datos) => {
-    await updateDoc(doc(db, "pedidos", id), datos);
-    setEditando(null);
-    getPedidos();
   };
 
   return (
@@ -64,22 +53,15 @@ export default function App() {
       </div>
 
       <div className="container">
+        <PedidoForm onAdd={agregar} />
 
-        <PedidoForm
-          onAdd={agregar}
-          onUpdate={editar}
-          editando={editando}
-          setEditando={setEditando}
-        />
-
-        <div className="title">Pedidos Recientes</div>
+        <h3>Pedidos Recientes</h3>
 
         <PedidoList
           pedidos={pedidos}
           onDelete={eliminar}
-          onEdit={setEditando}
+          onUpdate={editar}
         />
-
       </div>
     </>
   );

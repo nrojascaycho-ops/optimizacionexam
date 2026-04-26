@@ -1,39 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-export default function PedidoForm({ onAdd, onUpdate, editando, setEditando }) {
-
+export default function PedidoForm({ onAdd }) {
   const [form, setForm] = useState({
     nombre: "",
     apellido: "",
     producto: "",
     cantidad: "",
     estado: "",
-    pago: ""
+    pago: "",
   });
 
-  useEffect(() => {
-    if (editando) {
-      setForm(editando);
-    }
-  }, [editando]);
-
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (editando) {
-      onUpdate(editando.id, form);
-    } else {
-      onAdd(form);
-    }
-
-    setEditando(null);
+    onAdd(form);
 
     setForm({
       nombre: "",
@@ -41,17 +24,15 @@ export default function PedidoForm({ onAdd, onUpdate, editando, setEditando }) {
       producto: "",
       cantidad: "",
       estado: "",
-      pago: ""
+      pago: "",
     });
   };
 
   return (
     <form className="formulario" onSubmit={handleSubmit}>
-
-      <h2>{editando ? "Editar Pedido" : "Ingrese los Datos"}</h2>
+      <h2>Ingrese los Datos</h2>
 
       <div className="form-grid">
-
         <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} />
         <input name="apellido" placeholder="Apellido" value={form.apellido} onChange={handleChange} />
         <input name="producto" placeholder="Producto" value={form.producto} onChange={handleChange} />
@@ -71,12 +52,8 @@ export default function PedidoForm({ onAdd, onUpdate, editando, setEditando }) {
           <option value="qr">QR</option>
         </select>
 
-        <button type="submit">
-          {editando ? "Actualizar" : "Guardar"}
-        </button>
-
+        <button type="submit">Guardar</button>
       </div>
-
     </form>
   );
 }
