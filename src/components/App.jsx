@@ -24,19 +24,19 @@ export default function App() {
   });
 
   // 🔥 LISTAR FIREBASE
-  useEffect(() => {
-    const unsub = onSnapshot(collection(db, "pedidos"), (snapshot) => {
-      setPedidos(snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })));
-    });
-    return () => unsub();
-  }, []);
+useEffect(() => {
+  const unsub = onSnapshot(collection(db, "pedidos"), (snapshot) => {
+    const data = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+    console.log("🔥 DATOS FIREBASE:", data); // 👈 CLAVE
+    setPedidos(data);
+  });
+
+  return () => unsub();
+}, []);
 
   // 🔥 GUARDAR / ACTUALIZAR
   const guardar = async () => {
