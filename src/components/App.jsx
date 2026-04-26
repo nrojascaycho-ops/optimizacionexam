@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./styles.css";
+import "../styles.css"; // ✅ RUTA CORRECTA
 
 export default function App() {
   const [pedidos, setPedidos] = useState([]);
@@ -63,8 +63,7 @@ export default function App() {
       </div>
 
       <div className="container">
-
-        {/* FORMULARIO */}
+        {/* FORM */}
         <div className="card">
           <h3>Ingrese los Datos</h3>
 
@@ -145,7 +144,6 @@ export default function App() {
 
           </div>
         ))}
-
       </div>
     </>
   );

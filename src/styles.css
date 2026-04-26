@@ -4,7 +4,6 @@ body {
   background: #f3f4f6;
 }
 
-/* HEADER */
 .header {
   background: linear-gradient(to right, #6d28d9, #7c3aed);
   color: white;
@@ -31,12 +30,10 @@ body {
   border-radius: 20px;
 }
 
-/* CONTENIDO */
 .container {
   padding: 30px;
 }
 
-/* TARJETAS */
 .card {
   background: #f9fafb;
   padding: 20px;
@@ -44,14 +41,12 @@ body {
   margin-bottom: 15px;
 }
 
-/* 🔥 FORM EN 2 FILAS PERFECTO */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 }
 
-/* INPUTS */
 .form-grid input,
 .form-grid select {
   padding: 10px;
@@ -59,7 +54,6 @@ body {
   border: 1px solid #ccc;
 }
 
-/* BOTONES */
 .btn-main {
   background: #6d28d9;
   color: white;
@@ -84,38 +78,23 @@ body {
   padding: 8px 14px;
 }
 
-/* FILA */
 .fila {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* BADGES */
 .badge {
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 12px;
-  margin-right: 5px;
 }
 
-.pendiente {
-  background: #facc15;
-}
+.pendiente { background: #facc15; }
+.entregado { background: #22c55e; }
+.cancelado { background: #ef4444; }
+.pago { background: #c7d2fe; }
 
-.entregado {
-  background: #22c55e;
-}
-
-.cancelado {
-  background: #ef4444;
-}
-
-.pago {
-  background: #c7d2fe;
-}
-
-/* ACCIONES */
 .actions {
   display: flex;
   align-items: center;
